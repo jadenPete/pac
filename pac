@@ -31,7 +31,7 @@ Environment Variables:
   PAC_CLEAN  Options to use during 'clean'
              By default, '-rvuk0' is used
 
-By default, pac runs 'pacman -Syu'\
+By default, pac upgrades the system\
 "
 
 print_packages(){
@@ -78,11 +78,8 @@ else
 		foreign)
 			print_packages <(pacman -Qqm | sort) ;;
 
-		help)
-			echo "$help" ;;
-
 		modified)
-			for file in $(pacman -Qii | grep ^MODIFIED | awk '{print $2}'); do
+			for file in $(pacman -Qii | awk '/^MODIFIED/ {print $2}'); do
 				pacman -Qqo "$file" | head -c -1; echo "|$file"
 			done | column -s '|' -t
 		;;
@@ -99,5 +96,8 @@ else
 				echo "${BOLD}${GREEN}==> ${RESET}${BOLD}no candidate packages found for pruning"
 			fi
 		;;
+
+		*)
+			echo "$help" ;;
 	esac
 fi
