@@ -9,19 +9,25 @@ RESET=$(tput sgr0)
 help="\
 pac v1.0 - A pacman maintenance utility
 
-Usage: $(basename $0) [options]
+Usage: $(basename $0) [command]
 
-Options:
-  clean     Clean the package cache
-  config    Find .pacnew and .pacsave files
-  count     Print the number of packages installed
-  cycle     Find dependency cycles
-  explicit  List explicit packages
-  foreign   List foreign packages
-  help      Print this help message
-  modified  List modified files
-  optional  List optional packages
-  remove    Remove orphans
+Cleaning Commands:
+  clean      Clean the package cache
+  remove     Remove orphans
+
+File Commands:
+  config     Find .pacnew and .pacsave files
+  modified   Find modified files
+
+Package Commands:
+  cycle      Find dependency cycles
+  explicit   List explicit packages
+  optional   List optional packages
+  foreign    List foreign packages
+
+Other Commands:
+  count      Print the number of packages installed
+  help       Print this help message
 
 Environment Variables:
   PAC        Command to use when upgrading the system
@@ -80,7 +86,7 @@ else
 
 		modified)
 			for file in $(pacman -Qii | awk '/^MODIFIED/ {print $2}'); do
-				pacman -Qqo "$file" | head -c -1; echo "|$file"
+				pacman -Qqo "$file" | head -c -1; echo "|${file}"
 			done | column -s '|' -t
 		;;
 
