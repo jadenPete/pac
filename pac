@@ -21,6 +21,7 @@ File Commands:
 
 Package Commands:
   cycle      Find dependency cycles
+  devel      List development packages
   explicit   List explicit packages
   optional   List optional packages
   foreign    List foreign packages
@@ -77,6 +78,9 @@ else
 				fi
 			done
 		;;
+
+		devel)
+			pacman -Qq | grep -Ee '-(bzr|cvs|darcs|git|hg|svn)$' ;;
 
 		explicit)
 			print_packages <(pacman -Qqt | sort) ;;
