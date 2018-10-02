@@ -25,18 +25,23 @@ Package Commands:
   explicit   List explicit packages
   optional   List optional packages
   foreign    List foreign packages
+  largest    List packages by size
 
 Other Commands:
   count      Print the number of packages installed
   help       Print this help message
 
 Environment Variables:
-  PAC        Command to use when upgrading the system
-             By default, a recognized AUR helper is used
-             If none are found, 'sudo pacman -Syu' is run
+  PAC          Command to use when upgrading the system
+               By default, a recognized AUR helper is used
+               If none are found, 'sudo pacman -Syu' is run
 
-  PAC_CLEAN  Options to use during 'clean'
-             By default, '-rvuk0' is used
+  PAC_CLEAN    Options to use during 'clean'
+               By default, '-rvuk0' is used
+
+  PAC_LARGEST  How many packages to output in 'largest'
+               Use 0 to print all of them
+               By default, 20 are outputted
 
 By default, pac upgrades the system\
 "
@@ -87,6 +92,18 @@ else
 
 		foreign)
 			print_packages <(pacman -Qqm | sort) ;;
+
+		largest)
+			entries="$(print_packages <(pacman -Qqtt | sort) | sort -hk 2)"
+
+			if [ -z "$PAC_LARGEST" ]; then
+				echo "$entries" | tail -n 20
+			elif [ "$PAC_LARGEST" == '0' ]; then
+				echo "$entries"
+			else
+				echo "$entries" | tail -n "$PAC_LARGEST"
+			fi
+		;;
 
 		modified)
 			for file in $(pacman -Qii | awk '/^MODIFIED/ {print $2}'); do
