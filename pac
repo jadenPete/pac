@@ -25,7 +25,7 @@ Package Commands:
   explicit   List explicit packages
   optional   List optional packages
   foreign    List foreign packages
-  largest    List packages by size
+  largest    List removable packages by size
 
 Other Commands:
   count      Print the number of packages installed
