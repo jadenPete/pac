@@ -23,9 +23,9 @@ Package Commands:
   cycle      Find dependency cycles
   devel      List development packages
   explicit   List explicit packages
-  optional   List optional packages
   foreign    List foreign packages
   largest    List removable packages by size
+  optional   List optional packages
 
 Other Commands:
   count      Print the number of packages installed
