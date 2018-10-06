@@ -94,14 +94,14 @@ else
 			print_packages <(pacman -Qqm | sort) ;;
 
 		largest)
-			entries="$(print_packages <(pacman -Qqtt | sort) | sort -hk 2)"
+			entries="$(print_packages <(pacman -Qqtt | sort) | sort -hrk 2)"
 
 			if [ -z "$PAC_LARGEST" ]; then
-				echo "$entries" | tail -n 20
+				echo "$entries" | head -n 20
 			elif [ "$PAC_LARGEST" == '0' ]; then
 				echo "$entries"
 			else
-				echo "$entries" | tail -n "$PAC_LARGEST"
+				echo "$entries" | head -n "$PAC_LARGEST"
 			fi
 		;;
 
