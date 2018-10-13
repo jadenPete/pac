@@ -56,7 +56,7 @@ if [ $# -eq 0 ]; then
 	elif hash trizen &> /dev/null; then
 		trizen -Syu
 	elif hash yay &> /dev/null; then
-		yay -Syu
+		yay
 	else
 		sudo pacman -Syu
 	fi
