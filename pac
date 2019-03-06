@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 BLUE=$(tput setaf 4)
+GREEN=$(tput setaf 2)
+
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
