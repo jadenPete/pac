@@ -47,7 +47,7 @@ By default, pac upgrades the system\
 "
 
 print_packages(){
-	packages=$(comm -23 "$1" <(pacman -Qqg base base-devel | sort))
+	packages=$(comm -23 "$1" <(pacman -Qqg base-devel | sort))
 
 	if [ -n "$packages" ]; then
 		expac -HM '%n|%m|%d' $packages | column -s '|'  -t
