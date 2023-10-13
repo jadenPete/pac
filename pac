@@ -47,10 +47,8 @@ By default, pac upgrades the system\
 "
 
 print_packages(){
-	packages=$(comm -23 "$1" <(pacman -Qqg base-devel | sort))
-
-	if [ -n "$packages" ]; then
-		expac -HM '%n|%m|%d' $packages | column -s '|'  -t
+	if [ "$#" -ge 1 ]; then
+		expac -HM '%n|%m|%d' "$@" | column -s '|' -t
 	fi
 }
 
@@ -92,13 +90,13 @@ else
 			pacman -Qq | grep -Ee '-(bzr|cvs|darcs|git|hg|svn)$' ;;
 
 		explicit)
-			print_packages <(pacman -Qqt | sort) ;;
+			print_packages $(pacman -Qqt | sort) ;;
 
 		foreign)
-			print_packages <(pacman -Qqm | sort) ;;
+			print_packages $(pacman -Qqm | sort) ;;
 
 		largest)
-			entries="$(print_packages <(pacman -Qqtt | sort) | sort -hrk 2)"
+			entries="$(print_packages $(pacman -Qqtt | sort) | sort -hrk 2)"
 
 			if [ -z "$PAC_LARGEST" ]; then
 				echo "$entries" | head -n 20
@@ -116,7 +114,7 @@ else
 		;;
 
 		optional)
-			print_packages <(comm -13 <(pacman -Qqt | sort) <(pacman -Qqtt | sort)) ;;
+			print_packages $(comm -13 <(pacman -Qqt | sort) <(pacman -Qqtt | sort)) ;;
 
 		remove)
 			packages="$(pacman -Qqdt)"
